@@ -29,49 +29,6 @@ UnifiedSearchResultsListModel::UnifiedSearchResultsListModel(AccountState *accou
     : QAbstractListModel(parent)
     , _accountState(accountState)
 {
-    beginInsertRows(QModelIndex(), 0, 5);
-    UnifiedSearchResult filesCategorySeparator;
-    filesCategorySeparator._categoryId = "files";
-    filesCategorySeparator._categoryName = "Files";
-    filesCategorySeparator._type = UnifiedSearchResult::Type::CategorySeparator;
-    _resultsCombined.push_back(filesCategorySeparator);
-
-    UnifiedSearchResult fakeFileResult;
-    fakeFileResult._title = "Long long long Fake file result Long long long Long long long Fake file result Long long long Long long long Fake file result Long long long";
-    fakeFileResult._subline = "Subline for Fake Long long long file result for Fake Long long long file result for Fake Long long long file result for Fake Long long long file result";
-    fakeFileResult._categoryId = "files";
-    fakeFileResult._categoryName = "Files";
-
-    UnifiedSearchResult fetchMoreFileResultsTrigger;
-    fetchMoreFileResultsTrigger._categoryId = "files";
-    fetchMoreFileResultsTrigger._type = UnifiedSearchResult::Type::FetchMoreTrigger;
-
-    _resultsCombined.push_back(fakeFileResult);
-    _resultsCombined.push_back(fetchMoreFileResultsTrigger);
-
-    UnifiedSearchResult talkMessagesCategorySeparator;
-    talkMessagesCategorySeparator._categoryId = "comments";
-    talkMessagesCategorySeparator._categoryName = "Comments";
-    talkMessagesCategorySeparator._type = UnifiedSearchResult::Type::CategorySeparator;
-    _resultsCombined.push_back(talkMessagesCategorySeparator);
-
-    UnifiedSearchResult fakeTalkMessagesResult;
-    fakeTalkMessagesResult._title = "Long/path/subpath/folder/file.md";
-    fakeTalkMessagesResult._subline = R"(
-@kwfw  @khl Long long long Fake file result Long long long Long long long Fake file result Long long long Long long long Fake fil)
-
-Long long long Fake file result Long long long Long long long Fake file result Long long long Long long long Fake fil)";
-    fakeTalkMessagesResult._thumbnailUrl = "https://cloud.nextcloud.com/avatar/lukas/42";
-    fakeTalkMessagesResult._categoryId = "comments";
-    fakeTalkMessagesResult._categoryName = "Comments";
-
-    UnifiedSearchResult fetchMoreTalkMessagesTrigger;
-    fetchMoreTalkMessagesTrigger._categoryId = "talk_messages";
-    fetchMoreTalkMessagesTrigger._type = UnifiedSearchResult::Type::FetchMoreTrigger;
-
-    _resultsCombined.push_back(fakeTalkMessagesResult);
-    _resultsCombined.push_back(fetchMoreTalkMessagesTrigger);
-    endInsertRows();
 }
 
 UnifiedSearchResultsListModel::~UnifiedSearchResultsListModel()
