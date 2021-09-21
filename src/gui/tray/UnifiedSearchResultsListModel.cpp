@@ -66,7 +66,7 @@ QVariant UnifiedSearchResultsListModel::data(const QModelIndex &index, int role)
         if (resulInfo._categoryId.contains(QStringLiteral("files"))) {
             if (!resulInfo._icon.isEmpty()) {
                 if (resulInfo._icon.contains(QStringLiteral("/")) && !resulInfo._icon.startsWith("http")) {
-                    return QString("https://cloud.nextcloud.com/") + resulInfo._icon;
+                    return QString("https://cloud.nextcloud.com/" + resulInfo._icon);
                 }
                 if (resulInfo._icon == QStringLiteral("icon-folder")) {
                     return QStringLiteral(":/client/theme/black/folder.svg");
