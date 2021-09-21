@@ -68,7 +68,7 @@ public:
 
 QQuickImageResponse *UnifiedSearchResultImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize)
 {
-    AsyncImageResponse *response = new AsyncImageResponse(id, requestedSize);
+    auto *response = new AsyncImageResponse(id, requestedSize);
     return response;
 }
 

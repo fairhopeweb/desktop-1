@@ -54,7 +54,6 @@ public:
     };
 
     explicit UnifiedSearchResultsListModel(AccountState *accountState, QObject *parent = nullptr);
-    ~UnifiedSearchResultsListModel() override;
 
     QVariant data(const QModelIndex &index, int role) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
