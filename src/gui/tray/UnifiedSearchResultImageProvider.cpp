@@ -17,7 +17,6 @@
 #include "UserModel.h"
 
 #include <QImage>
-#include <QPixmapCache>
 
 namespace OCC {
 class AsyncImageResponse : public QQuickImageResponse
@@ -57,37 +56,23 @@ private:
             return;
         }
 
-        const QString searchResultItemIconPrefix = QStringLiteral("unified_search_result_icon_");
-        
-        QPixmap cachedPixmap;
-
-        if (QPixmapCache::find(searchResultItemIconPrefix + _imagePaths.at(_index), &cachedPixmap)) {
-            emitFinished(cachedPixmap.toImage());
-            return;
-        }
-
         const QUrl iconUrl = QUrl(_imagePaths.at(_index));
 
         if (_imagePaths.at(_index).startsWith(":/client")) {
             // return a local file
-            const auto pixmapFromLocalFile = QIcon(_imagePaths.at(_index)).pixmap(_requestedImageSize);
-            QPixmapCache::insert(searchResultItemIconPrefix + _imagePaths.at(_index), pixmapFromLocalFile);
-            QImage fromLocalFile = pixmapFromLocalFile.toImage();
-            emitFinished(fromLocalFile);
+            emitFinished(QIcon(_imagePaths.at(_index)).pixmap(_requestedImageSize).toImage());
             return;
         }
 
         if (auto currentAccount = UserModel::instance()->currentUser()->account()) {
             // fetch remote resource
+            ++_index;
             auto reply = currentAccount->sendRawRequest("GET", iconUrl);
-            connect(reply, &QNetworkReply::finished, this, [this, searchResultItemIconPrefix, reply]() {
+            connect(reply, &QNetworkReply::finished, this, [this, reply]() {
                 const QByteArray data = reply->readAll();
                 if (data.isEmpty() || data == QByteArrayLiteral("[]")) {
-                    ++_index;
                     processNextImage();
                 } else {
-                    const auto imageFromData = QImage::fromData(data);
-                    QPixmapCache::insert(searchResultItemIconPrefix + _imagePaths.at(_index), QPixmap::fromImage(imageFromData));
                     emitFinished(QImage::fromData(data));
                 }
             });

@@ -51,6 +51,7 @@ MouseArea {
                 visible: false
                 asynchronous: true
                 source: "image://unified-search-result-image/" + model.thumbnailUrl + ";" + model.icon
+                cache: true
                 sourceSize.width: imageData.width
                 sourceSize.height: imageData.height
                 width: imageData.width
@@ -59,7 +60,7 @@ MouseArea {
             Rectangle {
                 id: mask
                 visible: false
-                radius: width / 2
+                radius: model.isRounded ? width / 2 : 0
                 width: imageData.width
                 height: imageData.height
             }
