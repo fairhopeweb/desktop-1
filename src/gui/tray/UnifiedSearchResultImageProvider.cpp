@@ -57,31 +57,37 @@ private:
             return;
         }
 
-        const QString searchResultItemIconPrefix = QStringLiteral("unified_search_result_icon");
+        const QString searchResultItemIconPrefix = QStringLiteral("unified_search_result_icon_");
+        
+        QPixmap cachedPixmap;
 
-       /* QPixmap cachedPixmap;
-
-        if (!QPixmapCache::find(_imagePaths.at(_index), &cachedPixmap)) {
+        if (QPixmapCache::find(searchResultItemIconPrefix + _imagePaths.at(_index), &cachedPixmap)) {
+            emitFinished(cachedPixmap.toImage());
+            return;
         }
-        */
+
         const QUrl iconUrl = QUrl(_imagePaths.at(_index));
 
         if (_imagePaths.at(_index).startsWith(":/client")) {
             // return a local file
-            QImage fromLocalFile = QIcon(_imagePaths.at(_index)).pixmap(_requestedImageSize).toImage();
+            const auto pixmapFromLocalFile = QIcon(_imagePaths.at(_index)).pixmap(_requestedImageSize);
+            QPixmapCache::insert(searchResultItemIconPrefix + _imagePaths.at(_index), pixmapFromLocalFile);
+            QImage fromLocalFile = pixmapFromLocalFile.toImage();
             emitFinished(fromLocalFile);
             return;
         }
 
         if (auto currentAccount = UserModel::instance()->currentUser()->account()) {
             // fetch remote resource
-            ++_index;
             auto reply = currentAccount->sendRawRequest("GET", iconUrl);
-            connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+            connect(reply, &QNetworkReply::finished, this, [this, searchResultItemIconPrefix, reply]() {
                 const QByteArray data = reply->readAll();
                 if (data.isEmpty() || data == QByteArrayLiteral("[]")) {
+                    ++_index;
                     processNextImage();
                 } else {
+                    const auto imageFromData = QImage::fromData(data);
+                    QPixmapCache::insert(searchResultItemIconPrefix + _imagePaths.at(_index), QPixmap::fromImage(imageFromData));
                     emitFinished(QImage::fromData(data));
                 }
             });
