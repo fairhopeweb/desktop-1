@@ -60,9 +60,9 @@ QVariant UnifiedSearchResultsListModel::data(const QModelIndex &index, int role)
                 }
             }
 
-            if (resultInfo._icon == QStringLiteral("icon-folder")) {
+            if (resultInfo._icon.contains(QStringLiteral("folder"))) {
                 return QStringLiteral(":/client/theme/black/folder.svg");
-            } else if (resultInfo._icon == QStringLiteral("deck")) {
+            } else if (resultInfo._icon.contains(QStringLiteral("deck"))) {
                 return QStringLiteral(":/client/theme/black/deck.svg");
             } else if (resultInfo._icon.contains(QStringLiteral("calendar"))) {
                 return QStringLiteral(":/client/theme/black/calendar.svg");
