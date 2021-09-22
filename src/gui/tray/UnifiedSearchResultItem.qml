@@ -48,13 +48,28 @@ MouseArea {
             Layout.preferredHeight: visible ? Style.trayWindowHeaderHeight : 0
             Image {
                 id: unifiedSearchResultThumbnail
-                visible: !unifiedSearchResultThumbnailPlaceholder.visible
+                //visible: !unifiedSearchResultThumbnailPlaceholder.visible
+                visible: false
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
                 Layout.leftMargin: contentLeftMargin
                 verticalAlignment: Qt.AlignCenter
                 asynchronous: true
                 cache: true
                 source: "image://unified-search-result-image/" + model.thumbnailUrl
+                sourceSize.width: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
+                sourceSize.height: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
+                Layout.preferredWidth: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
+                Layout.preferredHeight: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
+            }
+            Image {
+                id: unifiedSearchResultIcon
+                visible: !unifiedSearchResultThumbnailPlaceholder.visible
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                Layout.leftMargin: contentLeftMargin
+                verticalAlignment: Qt.AlignCenter
+                asynchronous: true
+                cache: true
+                source: "image://unified-search-result-image/" + model.icon
                 sourceSize.width: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
                 sourceSize.height: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
                 Layout.preferredWidth: model.thumbnailUrl ? Style.trayWindowHeaderHeight : 0
