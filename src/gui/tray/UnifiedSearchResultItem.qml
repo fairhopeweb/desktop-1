@@ -50,7 +50,7 @@ MouseArea {
                 id: unifiedSearchResultThumbnail
                 visible: !unifiedSearchResultThumbnailPlaceholder.visible
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-                Layout.leftMargin: 8
+                Layout.leftMargin: contentLeftMargin
                 verticalAlignment: Qt.AlignCenter
                 asynchronous: true
                 cache: true
@@ -64,7 +64,7 @@ MouseArea {
                 id: unifiedSearchResultThumbnailPlaceholder
                 visible: model.thumbnailUrl && unifiedSearchResultThumbnail.status != Image.Ready
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-                Layout.leftMargin: 8
+                Layout.leftMargin: contentLeftMargin
                 verticalAlignment: Qt.AlignCenter
                 cache: true
                 source: "qrc:///client/theme/change.svg"
@@ -83,8 +83,8 @@ MouseArea {
                 id: unifiedSearchResultTitleText
                 text: model.resultTitle.replace(/[\r\n]+/g, " ")
                 visible: parent.visible
-                Layout.leftMargin: 8
-                Layout.rightMargin: 8
+                Layout.leftMargin: contentLeftMargin
+                Layout.rightMargin: contentRightMargin
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 font.pixelSize: Style.topLinePixelSize
@@ -95,8 +95,8 @@ MouseArea {
                 text: model.subline.replace(/[\r\n]+/g, " ")
                 elide: Text.ElideRight
                 visible: parent.visible
-                Layout.leftMargin: 8
-                Layout.rightMargin: 8
+                Layout.leftMargin: contentLeftMargin
+                Layout.rightMargin: contentRightMargin
                 Layout.fillWidth: true
                 color: "grey"
             }
