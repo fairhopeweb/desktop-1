@@ -17,6 +17,7 @@
 #include "UserModel.h"
 
 #include <QImage>
+#include <QPixmapCache>
 
 namespace OCC {
 class AsyncImageResponse : public QQuickImageResponse
@@ -56,6 +57,13 @@ private:
             return;
         }
 
+        const QString searchResultItemIconPrefix = QStringLiteral("unified_search_result_icon");
+
+       /* QPixmap cachedPixmap;
+
+        if (!QPixmapCache::find(_imagePaths.at(_index), &cachedPixmap)) {
+        }
+        */
         const QUrl iconUrl = QUrl(_imagePaths.at(_index));
 
         if (_imagePaths.at(_index).startsWith(":/client")) {
